@@ -7,7 +7,7 @@
 #include <variant>
 #include "fwd.h"
 
-using valueType = std::variant<std::string, double, bool, int>;
+using ValueType = std::variant<std::string, double, bool, int>;
 
 class Fact {
 public:
@@ -19,38 +19,34 @@ public:
 
     struct FactOptions {
         bool cache;
+        int priority = 1;
     };
 
     // Overloaded constructors
-    Fact(std::string& id, double value, FactOptions options = {});
+    Fact(std::string& id, ValueType value, FactOptions options = { true, 1 });
 
     bool isConstant();
     bool isDynamic();
-    double calculate( std::map<std::string, std::string>& params,  Almanac& almanac) ;
-    static std::string hashFromObject( std::map<std::string, std::string>& obj);
-    std::map<std::string, std::string> defaultCacheKeys( std::map<std::string, std::string>& params) ;
-    std::string getCacheKey( std::map<std::string, std::string>& params) ;
+    ValueType calculate(Almanac& almanac);
 
     // Function to get the fact's ID
     std::string getId();
 
     // Function to get the fact's options
-    std::map<std::string, std::string> getOptions()  {
+    FactOptions getOptions()  {
         return options;
     }
 
     // Function to get the fact's type
-    std::string getType() ;
+    std::string getType();
 
     // Function to get the fact's value
-    double getValue();
+    ValueType getValue();
 
 private:
     std::string id;
-    double value;
-    std::function<double( std::map<std::string, std::string>&,  Almanac&)> calculationMethod;
+    ValueType value;
     FactType type;
-    std::map<std::string, std::string> options;
-
-    std::map<std::string, std::string> defaultCacheKeysImpl( std::map<std::string, std::string>& params) ;
+    FactOptions options;
+    int priority;
 };

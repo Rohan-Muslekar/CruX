@@ -1,9 +1,11 @@
 #include "server.h"
 
-Fact::Fact(std::string& id, double value, FactOptions options) {
+Fact::Fact(std::string& id, ValueType value, FactOptions options) {
     this->id = id;
     this->value = value;
     this->type = CONSTANT;
+    this->options = options;
+    this->priority = options.priority;
 }
 
 bool Fact::isConstant()  {
@@ -14,36 +16,8 @@ bool Fact::isDynamic()  {
     return this->type == DYNAMIC;
 }
 
-double Fact::calculate( std::map<std::string, std::string>& params,  Almanac& almanac)  {
-    if (this->type == CONSTANT) {
-        return this->value;
-    } else {
-        return this->calculationMethod(params, almanac);
-    }
-}
-
-std::string Fact::hashFromObject( std::map<std::string, std::string>& obj) {
-    std::string hash = "";
-
-    for (auto& [key, value] : obj) {
-        hash += key + ":" + value + ";";
-    }
-
-    return hash;
-}
-
-std::map<std::string, std::string> Fact::defaultCacheKeys( std::map<std::string, std::string>& params)  {
-    if (this->type == CONSTANT) {
-        return {};
-    } else {
-        return this->defaultCacheKeysImpl(params);
-    }
-}
-
-std::string Fact::getCacheKey( std::map<std::string, std::string>& params)  {
-    std::map<std::string, std::string> cacheKeys = this->defaultCacheKeys(params);
-
-    return Fact::hashFromObject(cacheKeys);
+ValueType Fact::calculate(Almanac& almanac)  {
+    return this->value;
 }
 
 std::string Fact::getId() {
@@ -58,11 +32,6 @@ std::string Fact::getType()  {
     }
 }
 
-double Fact::getValue() {
+ValueType Fact::getValue() {
     return this->value;
 }
-
-std::map<std::string, std::string> Fact::defaultCacheKeysImpl( std::map<std::string, std::string>& params)  {
-    return {};
-}
-
