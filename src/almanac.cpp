@@ -53,20 +53,36 @@ std::shared_ptr<Fact> Almanac::getFact( std::string& factId) {
     return this->factMap[factId];
 }
 
-void Almanac::addRuntimeFact( std::string& factId, double value) {
-    
+void Almanac::addRuntimeFact(std::string& factId, ValueType value) {
+    _addConstantFact(std::make_shared<Fact>(factId, value, Fact::FactOptions { true, 1 }));
 }
 
-double Almanac::factValue( std::string& factId,  std::map<std::string, std::string>& params, std::string& path) {
-    return 0;
+ValueType Almanac::factValue(std::string& factId) {
+    auto fact = this->factMap[factId];
+    if (fact->isConstant()) {
+        return fact->getValue();
+    } else {
+        std::string cacheKey = fact->getCacheKey();
+        if (cacheKey != "") {
+            auto it = this->factResultsCache.find(cacheKey);
+            if (it != this->factResultsCache.end()) {
+                return it->second;
+            }
+        }
+        return fact->calculate(*this);
+    }
 }
 
 void Almanac::_addConstantFact(std::shared_ptr<Fact> fact) {
     this->factMap[fact->getId()] = fact;
 }
 
-double Almanac::_setFactValue(std::shared_ptr<Fact> fact, std::map<std::string, std::string>& params, double value) {
-    return 0;
+ValueType Almanac::_setFactValue(std::shared_ptr<Fact> fact, ValueType value) {
+    std::string cacheKey = fact->getCacheKey();
+    if (cacheKey != "") {
+        this->factResultsCache[cacheKey] = value;
+    }
+    return value;
 }
 
 std::vector<double> Almanac::defaultPathResolver(double value, std::string path) {

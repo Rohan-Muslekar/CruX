@@ -23,16 +23,12 @@ enum class ConditionType {
 
 // Define the Condition class
 class Condition {
-private:
-    ConditionType conditionType;
-    std::string booleanOperator;
-    int priority;
-    std::vector<Condition> subConditions;
-    bool result;
-    bool factResult;
-
 public:
-    // ructor
+    enum BooleanOperator {
+        ALL,
+        ANY,
+        NOT
+    };
     Condition();
     Condition( std::map<std::string, std::string>& properties);
 
@@ -49,7 +45,7 @@ public:
     void setNonBooleanCondition( std::map<std::string, std::string>& properties);
 
     // Function to evaluate the condition
-    std::map<std::string, double> evaluate(Almanac& almanac);
+    bool evaluate(Almanac& almanac);
 
 
     // Function to get the value of the condition
@@ -60,7 +56,7 @@ public:
     // Function to get the boolean operator for the condition
     static std::string& getBooleanOperator(Condition& condition);
 
-    std::string getBooleanOperator() ;
+    BooleanOperator getBooleanOperator();
     // Function to check if the operator is a boolean operator
     bool isBooleanOperator() ;
 
@@ -69,6 +65,17 @@ public:
 
     // Function to set Result
     void setResult(bool result);
+private:
+    ConditionType conditionType;
+    BooleanOperator booleanOperator;
+    int priority;
+    std::vector<Condition> subConditions;
+    bool result;
+    bool factResult;
+
+    std::string factId;
+    Operator op;
+    ValueType value;
 };
 
 // Function to compare the fact result with the condition value using the operator

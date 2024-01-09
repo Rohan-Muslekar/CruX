@@ -12,7 +12,6 @@
 #include "condition.h"
 #include "rule-result.h"
 #include "default-operators.h"
-#include "json.h"
 #include "json.fwd.h"
 #include "engine.h"
 #include "types.dto.h"
@@ -20,7 +19,18 @@
 
 class Rule {
 public:
-    Rule(std::string jsonString);
+
+    struct RuleArg {
+        Condition::BooleanOperator booleanOperator = Condition::BooleanOperator::ALL;
+        std::vector<Condition> conditions;
+        std::string conditionName;
+        IEvent event = IEvent();
+        int priority = 1;
+        std::function<void()> onSuccess = [](){};
+        std::function<void()> onFailure = [](){};
+    };
+
+    Rule(RuleArg ruleArg);
 
     void setPriority(int priority);
     void setName(std::string& name);
@@ -41,16 +51,17 @@ private:
     IEvent ruleEvent;
     std::shared_ptr<Almanac> almanac;
     Engine* engine;
+    Condition::BooleanOperator booleanOperator;
 
     
     std::map<int, std::vector<Condition>> prioritizeConditions(std::vector<Condition>& conditions);
     bool evaluateCondition(Condition& condition);
-    bool evaluateConditions(std::vector<Condition>& conditions, std::string& method);
-    bool prioritizeAndRun(std::vector<Condition>& conditions, std::string& method);
+    bool evaluateConditions(std::vector<Condition>& conditions, Condition::BooleanOperator method);
+    bool prioritizeAndRun(std::vector<Condition>& conditions, Condition::BooleanOperator method);
 
     bool _any(std::vector<Condition>& conditions);
     bool _all(std::vector<Condition>& conditions);
-    bool _not(Condition& condition);
+    bool _not(std::vector<Condition>& conditions);
 
-    RuleResult processResult(bool result, RuleResult& ruleResult);
+    void processResult(RuleResult& ruleResult, bool result);
 };

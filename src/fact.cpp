@@ -35,3 +35,18 @@ std::string Fact::getType()  {
 ValueType Fact::getValue() {
     return this->value;
 }
+
+std::string Fact::hash(std::string& id) {
+    std::hash<std::string> hasher;
+    return std::to_string(hasher(id));
+}
+
+std::string Fact::getCacheKey() {
+    if (this->options.cache) {
+        std::string cacheKey = Fact::hash(this->id);
+        return cacheKey;
+    } else {
+        Logger::Log(ALERT, "Fact::getCacheKey: called on uncached fact");
+        return "";
+    }
+}

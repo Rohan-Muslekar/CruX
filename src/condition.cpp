@@ -72,12 +72,13 @@ void Condition::setNonBooleanCondition(std::map<std::string, std::string>& prope
     // }
 }
 
-std::map<std::string, double> Condition::evaluate(Almanac& almanac) {
+bool Condition::evaluate(Almanac& almanac) {
     // if (conditionType == ConditionType::BOOLEAN) {
     //     return evaluateBoolean(almanac);
     // } else {
     //     return evaluateNonBoolean(almanac);
     // }
+    return true;
 }
 
 double Condition::getValue(Almanac& almanac) {
@@ -97,14 +98,12 @@ std::string& Condition::getBooleanOperator(Condition& condition) {
     // return condition.booleanOperator;
 }
 
-std::string Condition::getBooleanOperator() {
-    // return booleanOperator;
-    return "";
+Condition::BooleanOperator Condition::getBooleanOperator() {
+    return booleanOperator;
 }
 
 bool Condition::isBooleanOperator() {
-    // return booleanOperator == "all" || booleanOperator == "any" || booleanOperator == "not";
-    return false;
+    return booleanOperator == BooleanOperator::ALL || booleanOperator == BooleanOperator::ANY || booleanOperator == BooleanOperator::NOT;
 }
 
 int Condition::getPriority() {

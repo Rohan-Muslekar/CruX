@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "fwd.h"
-
 struct IEvent {
     std::string name;
     std::string message;
@@ -20,3 +19,5 @@ struct IRunReturn {
         : almanac(almanac), successResults(), failureResults(), successEvents(), failureEvents() {
     }
 };
+
+using ValueType = std::variant<std::string, double, bool, int>;

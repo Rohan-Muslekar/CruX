@@ -6,8 +6,8 @@
 #include <stdexcept>
 #include <variant>
 #include "fwd.h"
+#include "types.dto.h"
 
-using ValueType = std::variant<std::string, double, bool, int>;
 
 class Fact {
 public:
@@ -28,6 +28,8 @@ public:
     bool isConstant();
     bool isDynamic();
     ValueType calculate(Almanac& almanac);
+    static std::string hash(std::string& id);
+    std::string getCacheKey() ;
 
     // Function to get the fact's ID
     std::string getId();

@@ -23,7 +23,7 @@ struct AlmanacOptions {
 class Almanac {
 private:
     std::map<std::string, std::shared_ptr<Fact>> factMap;
-    std::map<std::string, double> factResultsCache;
+    std::map<std::string, ValueType> factResultsCache;
     bool allowUndefinedFacts;
     std::function<std::vector<double>(double, std::string)> pathResolver;
     std::vector<IEvent> success;
@@ -48,14 +48,14 @@ public:
 
     std::shared_ptr<Fact> getFact( std::string& factId) ;
 
-    void addRuntimeFact( std::string& factId, double value);
+    void addRuntimeFact( std::string& factId, ValueType value);
 
-    double factValue( std::string& factId,  std::map<std::string, std::string>& params, std::string& path);
+    ValueType factValue(std::string& factId);
 
 private:
     void _addConstantFact(std::shared_ptr<Fact> fact);
 
-    double _setFactValue(std::shared_ptr<Fact> fact, std::map<std::string, std::string>& params, double value);
+    ValueType _setFactValue(std::shared_ptr<Fact> fact, ValueType value);
 
     static std::vector<double> defaultPathResolver(double value, std::string path);
 };
