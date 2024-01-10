@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include <variant>
 #include "fwd.h"
 struct IEvent {
     std::string name;
@@ -21,3 +21,7 @@ struct IRunReturn {
 };
 
 using ValueType = std::variant<std::string, double, bool, int>;
+
+using Callable_t = std::function<bool(ValueType, ValueType)>;
+using CallableFactValue = std::function<bool(ValueType)>;
+

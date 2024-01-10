@@ -29,32 +29,22 @@ public:
         ANY,
         NOT
     };
-    Condition();
-    Condition( std::map<std::string, std::string>& properties);
+
+    Condition(BooleanOperator booleanOperator, std::vector<Condition>& subConditions, int priority = 1);
+    Condition(std::string factId, Operator::OperatorName op, ValueType value, int priority = 1);
 
     // Function to get the conditions
-     std::vector<Condition>& getSubConditions() ;
-
-
-    ConditionType getConditionType( std::map<std::string, std::string>& properties) ;
-
-    void setBooleanOperator( std::map<std::string, std::string>& properties);
-
-    void parseSubConditions( std::string& subConditionsStr);
-
-    void setNonBooleanCondition( std::map<std::string, std::string>& properties);
+    std::vector<Condition>& getSubConditions() ;
 
     // Function to evaluate the condition
     bool evaluate(Almanac& almanac);
 
 
     // Function to get the value of the condition
-    double getValue(Almanac& almanac);
+    ValueType getValue(Almanac& almanac);
     
     void setFactResult(bool factResult);
 
-    // Function to get the boolean operator for the condition
-    static std::string& getBooleanOperator(Condition& condition);
 
     BooleanOperator getBooleanOperator();
     // Function to check if the operator is a boolean operator

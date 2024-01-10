@@ -14,14 +14,14 @@ enum struct OperatorName: short int {
     };
 
 std::map<Operator::OperatorName, Operator> Operators = {
-    {Operator::OperatorName::EQUAL, Operator(Operator::OperatorName::EQUAL, [](double factValue, double jsonValue) { return factValue == jsonValue; }, [] (double value) { return true;})},
-    {Operator::OperatorName::NOT_EQUAL, Operator(Operator::OperatorName::NOT_EQUAL, [](double factValue, double jsonValue) { return factValue != jsonValue; }, [] (double value) { return true;})},
-    {Operator::OperatorName::IN, Operator(Operator::OperatorName::IN, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::NOT_IN, Operator(Operator::OperatorName::NOT_IN, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::CONTAINS, Operator(Operator::OperatorName::CONTAINS, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::DOES_NOT_CONTAIN, Operator(Operator::OperatorName::DOES_NOT_CONTAIN, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::LESS_THAN, Operator(Operator::OperatorName::LESS_THAN, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::LESS_THAN_INCLUSIVE, Operator(Operator::OperatorName::LESS_THAN_INCLUSIVE, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::GREATER_THAN, Operator(Operator::OperatorName::GREATER_THAN, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})},
-    {Operator::OperatorName::GREATER_THAN_INCLUSIVE, Operator(Operator::OperatorName::GREATER_THAN_INCLUSIVE, [](double factValue, double jsonValue) { return false; }, [] (double value) { return true;})}
+    {Operator::OperatorName::EQUAL, Operator(Operator::OperatorName::EQUAL, [](ValueType factValue, ValueType jsonValue) { return factValue == jsonValue; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::NOT_EQUAL, Operator(Operator::OperatorName::NOT_EQUAL, [](ValueType factValue, ValueType jsonValue) { return factValue != jsonValue; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::IN, Operator(Operator::OperatorName::IN, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::NOT_IN, Operator(Operator::OperatorName::NOT_IN, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::CONTAINS, Operator(Operator::OperatorName::CONTAINS, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::DOES_NOT_CONTAIN, Operator(Operator::OperatorName::DOES_NOT_CONTAIN, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::LESS_THAN, Operator(Operator::OperatorName::LESS_THAN, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::LESS_THAN_INCLUSIVE, Operator(Operator::OperatorName::LESS_THAN_INCLUSIVE, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::GREATER_THAN, Operator(Operator::OperatorName::GREATER_THAN, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})},
+    {Operator::OperatorName::GREATER_THAN_INCLUSIVE, Operator(Operator::OperatorName::GREATER_THAN_INCLUSIVE, [](ValueType factValue, ValueType jsonValue) { return false; }, [] (ValueType value) { return true;})}
 };

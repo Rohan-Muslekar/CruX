@@ -21,9 +21,9 @@ class Rule {
 public:
 
     struct RuleArg {
+        std::string conditionName;
         Condition::BooleanOperator booleanOperator = Condition::BooleanOperator::ALL;
         std::vector<Condition> conditions;
-        std::string conditionName;
         IEvent event = IEvent();
         int priority = 1;
         std::function<void()> onSuccess = [](){};

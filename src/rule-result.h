@@ -14,7 +14,6 @@ public:
 
     void setResult(bool result);
     bool getResult();
-    std::string getBooleanOperator();
     std::vector<Condition> getConditions();
     IEvent getEvent();
 

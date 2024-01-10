@@ -15,7 +15,6 @@
 #include "fwd.h"
 #include "utils/logger.h"
 #include "utils/utils.h"
-#include "operator.h"
 #include "default-operators.h"
 #include "fact.h"
 #include "almanac.h"
@@ -24,3 +23,4 @@
 #include "rules.h"
 #include "engine.h"
 #include "types.dto.h"
+#include "operator.h"

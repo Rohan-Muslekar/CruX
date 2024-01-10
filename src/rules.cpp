@@ -79,17 +79,21 @@ std::map<int, std::vector<Condition>> Rule::prioritizeConditions(std::vector<Con
 }
 
 bool Rule::evaluateCondition(Condition& condition) {
-    if (condition.isBooleanOperator()) {
-        std::vector<Condition> subConditions = condition.getSubConditions();
-        Condition::BooleanOperator bop = condition.getBooleanOperator();
-        if (bop == Condition::BooleanOperator::ALL) {
-            return _all(subConditions);
-        } else if (bop == Condition::BooleanOperator::ANY) {
-            return _any(subConditions);
-        } else if (bop == Condition::BooleanOperator::NOT) {
-            return _not(subConditions);
+    std::vector<Condition> subConditions = condition.getSubConditions();
+    if (subConditions.size() != 0) {
+        if (condition.isBooleanOperator()) {
+            Condition::BooleanOperator bop = condition.getBooleanOperator();
+            if (bop == Condition::BooleanOperator::ALL) {
+                return _all(subConditions);
+            } else if (bop == Condition::BooleanOperator::ANY) {
+                return _any(subConditions);
+            } else if (bop == Condition::BooleanOperator::NOT) {
+                return _not(subConditions);
+            } else {
+                throw std::runtime_error("Rule: unknown boolean operator " + bop);
+            }
         } else {
-            throw std::runtime_error("Rule: unknown boolean operator " + bop);
+            return condition.evaluate(*almanac);
         }
     } else {
         return condition.evaluate(*almanac);

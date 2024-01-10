@@ -1,0 +1,25 @@
+{
+    "tasks": [
+        {
+            "label": "make all",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make clean",
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        }
+    ],
+    "version": "2.0.0"
+}

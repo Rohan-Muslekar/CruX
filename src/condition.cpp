@@ -1,101 +1,32 @@
 #include "server.h"
 
-Condition::Condition(std::map<std::string, std::string>& properties) {
-    if (properties.empty()) throw std::runtime_error("Condition: constructor options required");
+Condition::Condition(BooleanOperator booleanOperator, std::vector<Condition>& subConditions, int priority) {
+    this->booleanOperator = booleanOperator;
+    this->subConditions = subConditions;
+    this->priority = priority;
+}
 
-    conditionType = getConditionType(properties);
-
-    if (conditionType == ConditionType::BOOLEAN) {
-        setBooleanOperator(properties);
-    } else {
-        setNonBooleanCondition(properties);
-    }
+Condition::Condition(std::string factId, Operator::OperatorName op, ValueType value, int priority) {
+    this->factId = factId;
+    this->op = Operators[op];
+    this->value = value;
+    this->priority = priority;
 }
 
 std::vector<Condition>& Condition::getSubConditions() {
     return subConditions;
 }
 
-ConditionType Condition::getConditionType(std::map<std::string, std::string>& properties) {
-    if (properties.find("operator") != properties.end()) {
-        return ConditionType::BOOLEAN;
-    }
-    return ConditionType::NON_BOOLEAN;
-}
-
-void Condition::setBooleanOperator(std::map<std::string, std::string>& properties) {
-    // if (properties.find("operator") == properties.end()) {
-    //     throw std::runtime_error("Condition: boolean operator required");
-    // }
-
-    // booleanOperator = properties["operator"];
-
-    // if (properties.find("priority") != properties.end()) {
-    //     priority = std::stoi(properties["priority"]);
-    // }
-
-    // if (properties.find("conditions") != properties.end()) {
-    //     parseSubConditions(properties["conditions"]);
-    // }
-}
-
-void Condition::parseSubConditions(std::string& subConditionsStr) {
-    // std::vector<std::string> subConditionsJson = split(subConditionsStr, "&&");
-
-    // for (auto& subConditionJson : subConditionsJson) {
-    //     std::map<std::string, std::string> subConditionProperties = jsonToMap(subConditionJson);
-    //     subConditions.push_back(Condition(subConditionProperties));
-    // }
-}
-
-void Condition::setNonBooleanCondition(std::map<std::string, std::string>& properties) {
-    // if (properties.find("fact") == properties.end()) {
-    //     throw std::runtime_error("Condition: fact required");
-    // }
-
-    // fact = properties["fact"];
-
-    // if (properties.find("operator") == properties.end()) {
-    //     throw std::runtime_error("Condition: operator required");
-    // }
-
-    // operatorName = properties["operator"];
-
-    // if (properties.find("value") == properties.end()) {
-    //     throw std::runtime_error("Condition: value required");
-    // }
-
-    // value = std::stod(properties["value"]);
-
-    // if (properties.find("priority") != properties.end()) {
-    //     priority = std::stoi(properties["priority"]);
-    // }
-}
-
 bool Condition::evaluate(Almanac& almanac) {
-    // if (conditionType == ConditionType::BOOLEAN) {
-    //     return evaluateBoolean(almanac);
-    // } else {
-    //     return evaluateNonBoolean(almanac);
-    // }
-    return true;
+    bool result = false;
+    Operator::OperatorName opName = op.getName();
+    ValueType factValue = getValue(almanac);
+    result = op.evaluate(factValue, value);
+    return result;
 }
 
-double Condition::getValue(Almanac& almanac) {
-    // if (conditionType == ConditionType::BOOLEAN) {
-    //     throw std::runtime_error("Condition: getValue is not supported for boolean conditions");
-    // }
-
-    // return almanac.factValue(fact);
-    return 0;
-}
-
-void Condition::setFactResult(bool factResult) {
-    // this->factResult = factResult;
-}
-
-std::string& Condition::getBooleanOperator(Condition& condition) {
-    // return condition.booleanOperator;
+ValueType Condition::getValue(Almanac& almanac) {
+    return almanac.getFact(factId)->getValue();
 }
 
 Condition::BooleanOperator Condition::getBooleanOperator() {
@@ -107,10 +38,9 @@ bool Condition::isBooleanOperator() {
 }
 
 int Condition::getPriority() {
-    // return priority;
-    return 0;
+    return priority;
 }
 
 void Condition::setResult(bool result) {
-    // this->result = result;
+    this->result = result;
 }

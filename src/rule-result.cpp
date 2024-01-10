@@ -15,10 +15,6 @@ bool RuleResult::getResult() {
     return result;
 }
 
-std::string RuleResult::getBooleanOperator() {
-    return booleanOperator;
-}
-
 std::vector<Condition> RuleResult::getConditions() {
     return conditions;
 }

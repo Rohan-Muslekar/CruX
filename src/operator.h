@@ -1,10 +1,11 @@
 // operator.h
 #pragma once 
+#include <iostream>
 #include <functional>
 #include <stdexcept>
 
 #include "fwd.h"
-
+#include "types.dto.h"
 
 // Define the Operator class
 class Operator {
@@ -24,16 +25,16 @@ public:
     };
     // Constructor
     Operator();
-    Operator(OperatorName name, std::function<bool(double, double)> callback, std::function<bool(double)> factValueValidator);
+    Operator(Operator::OperatorName name, Callable_t callback, CallableFactValue factValueValidator);
 
     // Function to evaluate the operator
-    bool evaluate(double factValue, double jsonValue);
+    bool evaluate(ValueType factValue, ValueType conditionValue);
 
     // Function to get the operator's name
     OperatorName getName();
 
-private:
+    private:
     OperatorName name;
-    std::function<bool(double, double)> callback;
-    std::function<bool(double)> factValueValidator;
+    Callable_t callback;
+    CallableFactValue factValueValidator;
 };
