@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="CruX.png" alt="CRUX Logo" width="100"/>
+  <img src="CruX.png" alt="CRUX Logo" width="750" height="110"/>
 </p>
 
 [![License](https://img.shields.io/npm/l/crux)](LICENSE)
@@ -8,7 +8,9 @@
 
 # CRUX - C++ Rules Engine for eXecution
 
-<img src = "CruX.gif" alt="CRUX GIF" width="200"/>
+<p align = "center"> 
+    <img src = "CruX.gif" alt="CRUX GIF" width="400" height = "250"/>
+<p/>
 
 CRUX is a powerful C++ rules engine designed for efficient rule evaluation and decision-making processes. It provides a flexible and scalable framework to define and execute rules based on specific conditions.
 
